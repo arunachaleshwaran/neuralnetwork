@@ -152,6 +152,7 @@ class NeuralNetwork:
 
             if verbose and (epoch + 1) % max(1, epochs // 10) == 0:
                 print(f"Epoch {epoch + 1}/{epochs} - Loss: {avg_loss:.6f}")
+                self.log_state()
 
         return history
 
@@ -177,6 +178,16 @@ class NeuralNetwork:
         print("=" * 50)
         print(f"Total parameters: {total_params:,}")
         print("=" * 50)
+
+    def log_state(self) -> None:
+        """Log current state of the network with all neuron weights and biases."""
+        print("-" * 50)
+        print("Network State")
+        print("-" * 50)
+        for i, layer in enumerate(self.layers):
+            print(f"Layer {i + 1}: {layer}")
+            layer.log_state()
+        print("-" * 50)
 
     def __repr__(self) -> str:
         return f"NeuralNetwork(layers={len(self.layers)})"
