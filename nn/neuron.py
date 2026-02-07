@@ -57,7 +57,7 @@ class Neuron:
 
         # Xavier initialization for a single neuron
         limit = np.sqrt(6 / (input_size + 1))
-        self.weights = np.random.uniform(-limit, limit, (input_size,1))
+        self.weights = np.random.uniform(-limit, limit, (input_size))
         self.bias = 0.0
 
         # Gradients (computed during backward)
@@ -88,7 +88,7 @@ class Neuron:
 
         # Apply activation function
         activated = self.activation.forward(z)
-        return activated.reshape(-1)
+        return activated
 
     def backward(self, grad_output: NDArray) -> NDArray:
         """
@@ -112,8 +112,7 @@ class Neuron:
             ∂L/∂xi = ∂L/∂z * ∂z/∂xi    = ∂L/∂z * wi
         """
         # Gradient through activation: ∂L/∂z = ∂L/∂y * f'(z)
-        grad_output_reshaped = grad_output.reshape(-1, 1)
-        grad_z = self.activation.backward(grad_output_reshaped).reshape(-1)
+        grad_z = self.activation.backward(grad_output)
 
         # Gradient w.r.t. weights: sum over batch
         # self._input: (batch_size, input_size)

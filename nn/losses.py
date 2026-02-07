@@ -19,7 +19,7 @@ class Loss(ABC):
         self._y_true: NDArray | None = None
 
     @abstractmethod
-    def forward(self, y_pred: NDArray, y_true: NDArray) -> float:
+    def forward(self, y_pred: NDArray, y_true: NDArray) -> np.floating:
         """Compute loss value."""
         pass
 
@@ -28,7 +28,7 @@ class Loss(ABC):
         """Compute gradient w.r.t. predictions."""
         pass
 
-    def __call__(self, y_pred: NDArray, y_true: NDArray) -> float:
+    def __call__(self, y_pred: NDArray, y_true: NDArray) -> np.floating:
         return self.forward(y_pred, y_true)
 
     @property
@@ -44,8 +44,8 @@ class MSE(Loss):
 
     Used for regression problems.
     """
-
-    def forward(self, y_pred: NDArray, y_true: NDArray) -> float:
+    
+    def forward(self, y_pred: NDArray, y_true: NDArray) -> np.floating:
         self._y_pred = y_pred
         self._y_true = y_true
         return np.mean((y_pred - y_true) ** 2)
@@ -65,7 +65,7 @@ class CrossEntropy(Loss):
     For binary classification, use with sigmoid output.
     """
 
-    def forward(self, y_pred: NDArray, y_true: NDArray) -> float:
+    def forward(self, y_pred: NDArray, y_true: NDArray) -> np.floating:
         self._y_pred = y_pred
         self._y_true = y_true
 
@@ -80,7 +80,7 @@ class CrossEntropy(Loss):
             batch_size = y_pred.shape[0]
             loss = -np.sum(np.log(y_pred_clipped[np.arange(batch_size), y_true])) / batch_size
 
-        return float(loss)
+        return np.floating(loss)
 
     def backward(self) -> NDArray:
         # Simplified gradient for softmax + cross-entropy
@@ -104,7 +104,7 @@ class BinaryCrossEntropy(Loss):
     Used for binary classification with sigmoid output.
     """
 
-    def forward(self, y_pred: NDArray, y_true: NDArray) -> float:
+    def forward(self, y_pred: NDArray, y_true: NDArray) -> np.floating:
         self._y_pred = y_pred
         self._y_true = y_true
 
@@ -115,7 +115,7 @@ class BinaryCrossEntropy(Loss):
             y_true * np.log(y_pred_clipped) +
             (1 - y_true) * np.log(1 - y_pred_clipped)
         )
-        return float(loss)
+        return np.floating(loss)
 
     def backward(self) -> NDArray:
         # Clip to prevent division by zero
