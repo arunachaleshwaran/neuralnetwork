@@ -21,12 +21,10 @@ class Loss(ABC):
     @abstractmethod
     def forward(self, y_pred: NDArray, y_true: NDArray) -> np.floating:
         """Compute loss value."""
-        pass
 
     @abstractmethod
     def backward(self) -> NDArray:
         """Compute gradient w.r.t. predictions."""
-        pass
 
     def __call__(self, y_pred: NDArray, y_true: NDArray) -> np.floating:
         return self.forward(y_pred, y_true)

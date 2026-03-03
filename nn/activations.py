@@ -21,12 +21,10 @@ class ActivationFunction(ABC):
     @abstractmethod
     def forward(self, x: NDArray) -> NDArray:
         """Compute f(x)."""
-        pass
 
     @abstractmethod
     def backward(self, grad_output: NDArray) -> NDArray:
         """Compute gradient using cached input/output."""
-        pass
 
     def __call__(self, x: NDArray) -> NDArray:
         return self.forward(x)

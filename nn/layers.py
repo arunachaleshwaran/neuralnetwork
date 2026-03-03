@@ -28,19 +28,16 @@ class Layer(ABC):
     @abstractmethod
     def forward(self, x: NDArray) -> NDArray:
         """Forward pass."""
-        pass
 
     @abstractmethod
     def backward(self, grad_output: NDArray) -> NDArray:
         """Backward pass. Returns gradient w.r.t. input."""
-        pass
 
     def __call__(self, x: NDArray) -> NDArray:
         return self.forward(x)
 
     def log_state(self) -> None:
         """Log internal state for debugging."""
-        pass
 
     @property
     def parameters(self) -> list[NDArray]:
