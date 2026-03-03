@@ -51,6 +51,8 @@ class MSE(Loss):
         return np.mean((y_pred - y_true) ** 2)
 
     def backward(self) -> NDArray:
+        if self._y_pred is None or self._y_true is None:
+            raise ValueError("Must call forward() before backward()")
         n = self._y_pred.shape[0]
         return 2 * (self._y_pred - self._y_true) / n
 
@@ -83,6 +85,8 @@ class CrossEntropy(Loss):
         return np.floating(loss)
 
     def backward(self) -> NDArray:
+        if self._y_pred is None or self._y_true is None:
+            raise ValueError("Must call forward() before backward()")
         # Simplified gradient for softmax + cross-entropy
         # dL/dy_pred = y_pred - y_true (when used with softmax)
         if self._y_true.ndim == 2:
@@ -118,6 +122,8 @@ class BinaryCrossEntropy(Loss):
         return np.floating(loss)
 
     def backward(self) -> NDArray:
+        if self._y_pred is None or self._y_true is None:
+            raise ValueError("Must call forward() before backward()")
         # Clip to prevent division by zero
         y_pred_clipped = np.clip(self._y_pred, 1e-15, 1 - 1e-15)
         n = self._y_pred.shape[0]

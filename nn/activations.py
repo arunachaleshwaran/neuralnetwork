@@ -48,6 +48,8 @@ class ReLU(ActivationFunction):
         return np.maximum(0, x)
 
     def backward(self, grad_output: NDArray) -> NDArray:
+        if self._cache is None:
+            raise ValueError("Must call forward() before backward()")
         return grad_output * (self._cache > 0).astype(float)
 
 
@@ -66,6 +68,8 @@ class Sigmoid(ActivationFunction):
         return output
 
     def backward(self, grad_output: NDArray) -> NDArray:
+        if self._cache is None:
+            raise ValueError("Must call forward() before backward()")
         return grad_output * self._cache * (1 - self._cache)
 
 
@@ -82,6 +86,8 @@ class Tanh(ActivationFunction):
         return output
 
     def backward(self, grad_output: NDArray) -> NDArray:
+        if self._cache is None:
+            raise ValueError("Must call forward() before backward()")
         return grad_output * (1 - self._cache ** 2)
 
 

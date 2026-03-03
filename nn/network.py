@@ -79,8 +79,12 @@ class NeuralNetwork:
                 grads.extend(layer.gradients)
         return grads
 
-    def _train_step(self, x_batch: NDArray, y_batch: NDArray) -> float:
+    def _train_step(self, x_batch: NDArray, y_batch: NDArray) -> np.floating:
         """Perform one training step on a batch."""
+        if self.loss is None:
+            raise ValueError("Loss function must be set before training")
+        if self.optimizer is None:
+            raise ValueError("Optimizer must be set before training")
         # Forward pass
         predictions = self.forward(x_batch)
 
@@ -160,8 +164,10 @@ class NeuralNetwork:
         """Make predictions."""
         return self.forward(x)
 
-    def evaluate(self, x: NDArray, y: NDArray) -> float:
+    def evaluate(self, x: NDArray, y: NDArray) -> np.floating:
         """Evaluate loss on given data."""
+        if self.loss is None:
+            raise ValueError("Loss function must be set before evaluation")
         predictions = self.forward(x)
         return self.loss.forward(predictions, y)
 
