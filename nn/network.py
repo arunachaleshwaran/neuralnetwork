@@ -79,12 +79,21 @@ class NeuralNetwork:
                 grads.extend(layer.gradients)
         return grads
 
+    def zero_grad(self) -> None:
+        """Reset all gradients to None."""
+        for layer in self.layers:
+            layer.zero_grad()
+
     def _train_step(self, x_batch: NDArray, y_batch: NDArray) -> np.floating:
         """Perform one training step on a batch."""
         if self.loss is None:
             raise ValueError("Loss function must be set before training")
         if self.optimizer is None:
             raise ValueError("Optimizer must be set before training")
+
+        # Zero gradients from previous step
+        self.zero_grad()
+
         # Forward pass
         predictions = self.forward(x_batch)
 

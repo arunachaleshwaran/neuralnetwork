@@ -130,6 +130,11 @@ class Neuron:
 
         return grad_input
 
+    def zero_grad(self) -> None:
+        """Reset gradients to None."""
+        self.grad_weights = None
+        self.grad_bias = None
+
     def __call__(self, x: NDArray) -> NDArray:
         return self.forward(x)
 

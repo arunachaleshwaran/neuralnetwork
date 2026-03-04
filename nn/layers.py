@@ -39,6 +39,9 @@ class Layer(ABC):
     def log_state(self) -> None:
         """Log internal state for debugging."""
 
+    def zero_grad(self) -> None:
+        """Reset gradients to None."""
+
     @property
     def parameters(self) -> list[NDArray]:
         """Return list of trainable parameters."""
@@ -144,6 +147,12 @@ class Dense(Layer):
         """Log internal state for debugging."""
         for i, neuron in enumerate(self.neurons):
             print(f"  Neuron {i + 1}: weights={neuron.weights}, bias={neuron.bias:.6f}")
+
+    def zero_grad(self) -> None:
+        """Reset gradients for all neurons."""
+        for neuron in self.neurons:
+            neuron.zero_grad()
+
     @property
     def parameters(self) -> list[NDArray]:
         """Return neuron weights and biases for optimizer."""

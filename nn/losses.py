@@ -80,7 +80,7 @@ class CrossEntropy(Loss):
             batch_size = y_pred.shape[0]
             loss = -np.sum(np.log(y_pred_clipped[np.arange(batch_size), y_true])) / batch_size
 
-        return np.floating(loss)
+        return loss
 
     def backward(self) -> NDArray:
         if self._y_pred is None or self._y_true is None:
