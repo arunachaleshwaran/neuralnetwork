@@ -5,6 +5,7 @@ description = "Neural network implementation from scratch with NumPy"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
+    "ipywidgets>=8.1.8",
     "jupyter>=1.1.1",
     "numpy>=2.2.6",
 ]
